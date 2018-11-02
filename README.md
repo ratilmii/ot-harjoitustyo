@@ -12,4 +12,3 @@ Tämä on syksyn 2018 **Ohjelmistotekniikka**-kurssin *Readme*-tiedosto.
 
 [komentorivi.txt](https://github.com/ratilmii/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
-muutos
