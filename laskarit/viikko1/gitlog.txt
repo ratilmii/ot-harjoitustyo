@@ -1,5 +1,3 @@
-ristiriitamuutos
-
 commit d836103194ef839e5905a33118c357213f8eef15
 Author: ramirami <ratilmii@gmail.com>
 Date:   Fri Nov 2 11:34:31 2018 +0200
