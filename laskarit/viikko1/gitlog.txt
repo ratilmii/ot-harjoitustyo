@@ -1,0 +1,117 @@
+commit d836103194ef839e5905a33118c357213f8eef15
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:34:31 2018 +0200
+
+    muutoksia ja poistoja
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ tiedostoja/file3  | 1 +
+ 4 files changed, 1 insertion(+)
+
+commit fd43190645404befed68b4669c77601fca24ce27
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:31:46 2018 +0200
+
+    tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 2b5e49cc9b7cfdb29e1d56f71471c16015201127
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:27:03 2018 +0200
+
+    lisää muutoksia
+
+ eka.txt    | 4 +++-
+ kolmas.txt | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 88631ffb2e0933efd61f3454036bc4628615dbe7
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:25:31 2018 +0200
+
+    uudelleennimentä
+
+ eka.txt      | 4 ++++
+ tiedosto.txt | 4 ----
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 1d0b99522a388b38ff8479c815e2981d92a73339
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:23:51 2018 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 864771b1c7fae8cf4e9d471463822d0e7a42e849
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:23:04 2018 +0200
+
+    tekstiä muutettu
+
+ tiedosto.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit b983cc3e93cda9ce136c3643343dcc207993e924
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:21:14 2018 +0200
+
+    tekstiä kopioitu
+
+ tiedosto.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit e19c519c93173ca71c2eb43079d84f1c3d935896
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:18:13 2018 +0200
+
+    luotu stuff jossa neljäs.txt
+
+ "stuff/nelj\303\244s.txt" | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 384dacf1fc836ea92a13dc3035f1a6499bf20bc5
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:16:51 2018 +0200
+
+    muutettu toista ja kolmatta
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 8c2ba23b715a2fffb459272ce2c1b9364215eaad
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:15:54 2018 +0200
+
+    kolmas luotu
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit f95585f9b57fb1fb27a40bebfd3ea4005c263588
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:12:35 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 06a942a147102ef0d525ea3a4adf38638bc1c5e8
+Author: ramirami <ratilmii@gmail.com>
+Date:   Fri Nov 2 11:10:26 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
