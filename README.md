@@ -1,8 +1,12 @@
-# Ohjelmistotekniikka #
+# Mosaic Builder #
 
-## About ##
+Sovelluksen avulla käyttäjän on mahdollista luoda mosaiikkikuvia. Käyttäjä antaa ohjelmalle kuvan, josta lopullinen mosaiiki tehdään, sekä kokoelman kuvia, joita ohjelma käyttää materiaalina. Sovellus etsii kuvien dominantit värit joiden perusteella se asettaa ne sellaiseen järjestykseen, joka vastaa eniten kohdekuvaa.
 
-Tämä on syksyn 2018 **Ohjelmistotekniikka**-kurssin *Readme*-tiedosto.
+Sovelluksella on vain yksi käyttäjä kerrallaan, mutta tavoitteena on, että eri käyttäjät voivat luoda itselleen profiilin, joka pitää kirjaa käyttäjän aiemmin luomista mosaiikeista. 
+
+## Dokumentaatio ##
+
+[Vaatimusmäärittely](https://github.com/ratilmii/ot-harjoitustyo/blob/master/Dokumentaatio/Vaatimusmaarittely.md)
 
 ## Tehtävät ##
 
