@@ -7,6 +7,7 @@ Sovelluksella on vain yksi käyttäjä kerrallaan, mutta tavoitteena on, että e
 ## Dokumentaatio ##
 
 [Vaatimusmäärittely](https://github.com/ratilmii/ot-harjoitustyo/blob/master/Dokumentaatio/Vaatimusmaarittely.md)
+
 [Työaikakirjanpito](https://github.com/ratilmii/ot-harjoitustyo/blob/master/Dokumentaatio/Tyoaikakirjanpito.md)
 
 ## Tehtävät ##
