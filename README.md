@@ -10,11 +10,8 @@ Sovelluksella on vain yksi käyttäjä kerrallaan, mutta tavoitteena on, että e
 
 [Työaikakirjanpito](https://github.com/ratilmii/ot-harjoitustyo/blob/master/Dokumentaatio/Tyoaikakirjanpito.md)
 
-## Tehtävät ##
+## Tämänhetkinen toiminnallisuus ##
 
-### Viikko 1 ###
+Tällä hetkellä sovelluksella on mahdollista avata kuva, josta valmis mosaiikki on tarkoitus muodostaa, esikatseluruutuun, sekä tyhjentää valinta, sekä asettaa kohdehakemisto, josta mosaiikki saa lähdekuvansa ja tyhjentää valinta. 
 
-[gitlog.txt](https://github.com/ratilmii/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-
-[komentorivi.txt](https://github.com/ratilmii/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
 
