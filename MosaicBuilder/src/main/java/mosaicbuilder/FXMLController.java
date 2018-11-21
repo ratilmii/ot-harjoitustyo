@@ -59,6 +59,10 @@ public class FXMLController implements Initializable {
         }
     }
     
+    public ImageView getGoalImagePreview(){
+        return this.goalImagePreview;
+    }
+    
     @FXML 
     public void sourceButtonAction(ActionEvent event){
         DirectoryChooser dc = new DirectoryChooser();

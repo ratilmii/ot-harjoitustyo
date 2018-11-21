@@ -1,3 +1,5 @@
+package mosaicbuilder;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,11 +15,11 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Miika
+ * @author ramirami
  */
-public class MosaicBuilderTest {
+public class MainAppTest {
     
-    public MosaicBuilderTest() {
+    public MainAppTest() {
     }
     
     @BeforeClass
@@ -36,12 +38,9 @@ public class MosaicBuilderTest {
     public void tearDown() {
     }
 
-//    @Override
-//    public void run(){
-//        new Main().start(new Stage());
-//    }
-    
-    @Test
-    public void test(){
-    }
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
 }
