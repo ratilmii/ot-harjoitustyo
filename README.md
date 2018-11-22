@@ -14,4 +14,4 @@ Sovelluksella on vain yksi käyttäjä kerrallaan, mutta tavoitteena on, että e
 
 Tällä hetkellä sovelluksella on mahdollista avata kuva, josta valmis mosaiikki on tarkoitus muodostaa, esikatseluruutuun, sekä tyhjentää valinta, sekä asettaa kohdehakemisto, josta mosaiikki saa lähdekuvansa ja tyhjentää valinta. 
 
-
+test
