@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import javafx.stage.Stage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,9 +18,11 @@ import static org.junit.Assert.*;
  */
 public class MosaicBuilderTest {
     
+    
     public MosaicBuilderTest() {
     }
     
+
     @BeforeClass
     public static void setUpClass() {
     }
@@ -30,18 +33,17 @@ public class MosaicBuilderTest {
     
     @Before
     public void setUp() {
+
     }
     
     @After
     public void tearDown() {
     }
 
-//    @Override
-//    public void run(){
-//        new Main().start(new Stage());
-//    }
+
     
     @Test
-    public void test(){
+    public void test1(){
+        
     }
 }
