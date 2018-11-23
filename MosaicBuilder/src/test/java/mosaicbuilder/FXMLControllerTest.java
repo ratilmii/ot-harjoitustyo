@@ -6,7 +6,6 @@ package mosaicbuilder;
  * and open the template in the editor.
  */
 
-import mosaicbuilder.FXMLController;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,14 +21,13 @@ import static org.junit.Assert.*;
  */
 public class FXMLControllerTest {
     
-    private static FXMLController controller;
+
     
-    public FXMLControllerTest() {
-    }
     
+
     @BeforeClass
     public static void setUpClass() {
-        controller = new FXMLController();
+        
     }
     
     @AfterClass
@@ -38,20 +36,18 @@ public class FXMLControllerTest {
     
     @Before
     public void setUp() {
-        
+
     }
     
     @After
     public void tearDown() {
     }
 
-//    @Override
-//    public void run(){
-//        new Main().start(new Stage());
-//    }
+
     
     @Test
     public void test(){
-
+            
     }
+    
 }
