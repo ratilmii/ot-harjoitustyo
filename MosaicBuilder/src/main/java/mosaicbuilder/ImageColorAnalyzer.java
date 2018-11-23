@@ -13,8 +13,12 @@ import javafx.stage.FileChooser;
  *
  * @author ramirami
  */
-public class Images {
+public class ImageColorAnalyzer {
     
-
+    public ImageColorAnalyzer(){
+        
+    }
+    
+    
     
 }
