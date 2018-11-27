@@ -37,6 +37,7 @@ public class ImageColor {
                 int p = img.getRGB(i, j);
                 int[] ARGB = getPixelARGBArray(p);
                 int[] roundedARGB = getRoundedPixelARGBArray(ARGB);
+                
                 if (isPixelWhite(roundedARGB)){
                     continue;
                 }
@@ -47,7 +48,6 @@ public class ImageColor {
                 }else{
                     hm.put(rounded, hm.get(rounded)+1);
                 }
-
             }
         }
         
@@ -57,7 +57,7 @@ public class ImageColor {
     }
     
     public boolean isPixelWhite(int[] ARGB){
-        for(int i=1;i<ARGB.length;i++){
+        for(int i=1;i<3;i++){
             if(ARGB[i]<=245){
                 return false;
             }
