@@ -42,9 +42,9 @@ public class FXMLControllerTest {
 
 
     
-    @Test
-    public void test(){
-            
-    }
+//    @Test
+//    public void test(){
+//            
+//    }
     
 }

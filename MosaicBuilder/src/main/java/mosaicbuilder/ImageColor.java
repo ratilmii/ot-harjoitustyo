@@ -9,11 +9,13 @@ import java.io.File;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javafx.embed.swing.SwingFXUtils;
 import javax.imageio.ImageIO;
 
 /**
@@ -57,7 +59,7 @@ public class ImageColor {
     }
     
     public boolean isPixelWhite(int[] ARGB){
-        for(int i=1;i<3;i++){
+        for(int i=1;i<=3;i++){
             if(ARGB[i]<=245){
                 return false;
             }
@@ -108,5 +110,6 @@ public class ImageColor {
         
         return highestColor;
     }
+    
     
 }

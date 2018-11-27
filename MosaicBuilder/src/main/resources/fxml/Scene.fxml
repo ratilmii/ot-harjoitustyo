@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141" fx:controller="mosaicbuilder.FXMLController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mosaicbuilder.FXMLController">
     <children>
       <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -57,6 +57,16 @@
                      </VBox.margin>
                   </ImageView>
                   <Button fx:id="goalImageClearButton" mnemonicParsing="false" onAction="#clearGoalImagePreview" prefHeight="30.0" prefWidth="50.0" text="Clear" />
+                  <Label prefHeight="30.0" prefWidth="225.0" text="Current Image's Dominant RGB">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="RGBField" editable="false" prefHeight="30.0" prefWidth="225.0">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
                   <Label minHeight="30.0" prefHeight="30.0" prefWidth="225.0" text="Source Image Directory">
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -80,7 +90,7 @@
             </VBox>
          </left>
          <center>
-            <ImageView fitHeight="360.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_CENTER">
+            <ImageView fx:id="mainImageView" fitHeight="360.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_CENTER">
                <BorderPane.margin>
                   <Insets top="10.0" />
                </BorderPane.margin>

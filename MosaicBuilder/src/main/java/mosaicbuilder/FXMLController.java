@@ -43,6 +43,12 @@ public class FXMLController implements Initializable {
     private ImageView goalImagePreview;
     
     @FXML
+    private ImageView mainImageView;
+    
+    @FXML
+    private TextField RGBField;
+    
+    @FXML
     private TextField goalImageTextField;
     
     @FXML
@@ -87,6 +93,7 @@ public class FXMLController implements Initializable {
 //        for(y=0;y<l.length;y++){
 //            System.out.println(l[y]);
 //        }
+        RGBField.setText("(" + ar[1] + ", " + ar[2] + ", " + ar[3] + ")");
         
     }
     
@@ -108,6 +115,7 @@ public class FXMLController implements Initializable {
     public void clearGoalImagePreview(ActionEvent event){
         goalImagePreview.setImage(null);
         goalImageTextField.setText(null);
+        RGBField.setText(null);
     }
     
     @FXML 
