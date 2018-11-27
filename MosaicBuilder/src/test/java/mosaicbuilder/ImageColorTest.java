@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
  *
  * @author ramirami
  */
-public class ImageColorAnalyzerTest {
+public class ImageColorTest {
     
-    public ImageColorAnalyzerTest() {
+    public ImageColorTest() {
     }
     
     @BeforeClass
