@@ -9,9 +9,11 @@ import java.io.File;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import java.awt.image.BufferedImage;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javax.imageio.ImageIO;
 
 /**
@@ -20,9 +22,6 @@ import javax.imageio.ImageIO;
  */
 public class ImageColor {
     
-    public ImageColor(){
-        
-    }
     
     public int getDominantColor(BufferedImage img){
         int dominantColor;
@@ -38,7 +37,11 @@ public class ImageColor {
                 int p = img.getRGB(i, j);
                 int[] ARGB = getPixelARGBArray(p);
                 int[] roundedARGB = getRoundedPixelARGBArray(ARGB);
+                if (isPixelWhite(roundedARGB)){
+                    continue;
+                }
                 int rounded = (roundedARGB[0]<<24) | (roundedARGB[1]<<16) | (roundedARGB[2]<<8) | roundedARGB[3];
+                
                 if (!hm.containsKey(rounded)){
                     hm.put(rounded, 1);
                 }else{
@@ -51,6 +54,15 @@ public class ImageColor {
         dominantColor = getBiggestValueKey(hm);
         
         return dominantColor;
+    }
+    
+    public boolean isPixelWhite(int[] ARGB){
+        for(int i=1;i<ARGB.length;i++){
+            if(ARGB[i]<=245){
+                return false;
+            }
+        }
+        return true;
     }
     
     public int[] getPixelARGBArray(int pixel){
@@ -72,13 +84,29 @@ public class ImageColor {
         int i; 
         
         for (i = 0; i<pixel.length; i++){
-            roundedPixelARGB[i] = (int) (Math.round(pixel[i]/10.0) * 10);
+            int temp = (int) (Math.round(pixel[i]/10.0) * 10);
+            
+            roundedPixelARGB[i] = Math.min(temp, 255);
         }
         
         return roundedPixelARGB;
     }
     
-    public int getBiggestValueKey(HashMap hm){
+    public int getBiggestValueKey(HashMap<Integer,Integer> hm){
+        int highestColor = -1;
+        int highestAmount = -1;
+        
+        for (Map.Entry<Integer,Integer> entry : hm.entrySet()){
+            int color = entry.getKey();
+            int amount = entry.getValue();
+            
+            if (amount > highestAmount) {
+                highestAmount = amount;
+                highestColor = color;
+            }
+        }
+        
+        return highestColor;
     }
     
 }

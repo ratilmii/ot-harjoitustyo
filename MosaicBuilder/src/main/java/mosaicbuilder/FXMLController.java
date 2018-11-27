@@ -1,10 +1,13 @@
 package mosaicbuilder;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javax.imageio.ImageIO;
 
 public class FXMLController implements Initializable {
 
@@ -45,18 +49,44 @@ public class FXMLController implements Initializable {
     private TextField sourceImageTextField;
     
     @FXML
-    public void goalButtonAction(ActionEvent event){
+    public void goalButtonAction(ActionEvent event) throws IOException{
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(
                 new ExtensionFilter("Image Files", "*.jpg", "*.png", "*.bmp"));
         File selectedFile = fc.showOpenDialog(null);
         
-        Image goalImage = new Image(selectedFile.toURI().toString());
+        BufferedImage buffer = ImageIO.read(selectedFile);
+        Image goalImage = SwingFXUtils.toFXImage(buffer, null);
+        
         
         if(selectedFile != null){
             goalImagePreview.setImage(goalImage);
             goalImageTextField.setText(selectedFile.getAbsolutePath());
         }
+        
+        int k;
+        int y;
+        
+        ImageColor ic = new ImageColor();
+        
+        int i = ic.getDominantColor(buffer);
+        int[] arr = new int[4];
+        arr[0] = (i >> 24) & 0xff;
+        arr[1] = (i >> 16) & 0xff;
+        arr[2] = (i >> 8) & 0xff;
+        arr[3] = (i) & 0xff;
+        
+//        int[] j = ic.getPixelARGBArray(buffer.getRGB(8, 0));
+//        int[] l = ic.getRoundedPixelARGBArray(j);
+        System.out.println(i+"\n");
+        for(k=0;k<arr.length;k++){
+            System.out.println(arr[k]);
+        }
+        System.out.println("");
+//        for(y=0;y<l.length;y++){
+//            System.out.println(l[y]);
+//        }
+        
     }
     
     public ImageView getGoalImagePreview(){

@@ -6,6 +6,10 @@ package mosaicbuilder;
  * and open the template in the editor.
  */
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,6 +22,8 @@ import static org.junit.Assert.*;
  * @author ramirami
  */
 public class ImageColorTest {
+    
+    ImageColor ic = new ImageColor();
     
     public ImageColorTest() {
     }
@@ -32,15 +38,18 @@ public class ImageColorTest {
     
     @Before
     public void setUp() {
+        
     }
     
     @After
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+
+    @Test
+    public void getDominantColorTest() throws IOException {
+        BufferedImage b = ImageIO.read(new File("src/testImage.png"));
+        int d = ic.getDominantColor(b);
+        assertEquals(-6235046, d);
+    }
 }
