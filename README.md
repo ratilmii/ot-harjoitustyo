@@ -22,4 +22,4 @@ Ohjelma jättää huomiotta sellaiset värit, jotka ovat miltei täysin valkoisi
 
 ## Releaset ##
 
-[Viikko 5] (https://github.com/ratilmii/ot-harjoitustyo/releases/tag/viikko5)
+[Viikko 5](https://github.com/ratilmii/ot-harjoitustyo/releases/tag/viikko5)
