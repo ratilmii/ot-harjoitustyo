@@ -19,3 +19,7 @@ Ohjelmaan on luotu alustava toiminnallisuus dominantin värin etsimiseen halutus
 Ohjelma jättää huomiotta sellaiset värit, jotka ovat miltei täysin valkoisia, ts. joiden RGB-arvoista jokainen on yli 245. Loput väreistä tallennetaan HashMapiin, josta ohjelma etsii avaimen, jonka arvo on korkein integer. 
 
 (Palautuksista osa on myöhässä, sillä NetBeans lakkasi käynnistymästä juuri ratkaisevalla hetkellä, enkä päässyt lisäämään pom.xml:ään tarpeellisia osioita ja Firefox jäätyi täysin.)
+
+## Releaset ##
+
+[Viikko 5] (https://github.com/ratilmii/ot-harjoitustyo/releases/tag/viikko5)
