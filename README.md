@@ -23,3 +23,6 @@ Viikko 5 päivitys: ohjelman toimintaperiaate muutettu kokonaan, minkä vuoksi k
 ## Releaset ##
 
 [Viikko 5](https://github.com/ratilmii/ot-harjoitustyo/releases/tag/viikko5)
+
+### Huom ###
+Ohjelman toiminnallisuudessa on edelleen jotain häikkää, joten vaikka metodeja ja koodia on jo kertynyt, toivottua tulosta ei jostain syystä vielä saada, mitä en ole saanut vielä selvitettyä, joten koodikatselmoinnin tekijällä ei ole mikään kiire. Tulen toivon mukaan saamaan koodin parempaan kuntoon perjantain jälkeen.
