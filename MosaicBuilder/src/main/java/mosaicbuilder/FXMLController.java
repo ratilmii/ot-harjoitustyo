@@ -109,6 +109,7 @@ public class FXMLController implements Initializable {
         File[] sourceImages = this.sourceFiles.listFiles();
         
         int i, k, l;
+        int currentTile = 0;
         
         double lowestSum = Double.POSITIVE_INFINITY;
         int x = 0;
@@ -123,7 +124,7 @@ public class FXMLController implements Initializable {
         
         for (k=0;k<tilesRows;k++){
             for(l=0;l<tilesColumns;l++){
-                int currentTile = 0;    
+                    
                 ImageCompare ic = new ImageCompare();
                 BufferedImage tile = ib.getTile(this.goalBuffer, x, y);
 
@@ -142,7 +143,7 @@ public class FXMLController implements Initializable {
                         lowestSum = distSum;
                         bestMatchID = i;
                         IDArray[currentTile][0] = bestMatchID;
-                        System.out.println(IDArray[currentTile][currentTile]);
+                        System.out.println(IDArray[currentTile][0]);
                     }
                     
                 }
