@@ -9,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import net.coobird.thumbnailator.Thumbnails;
 
 /**
  *
@@ -38,13 +40,38 @@ public class ImageBuild {
         return this.tileHeight;
     }
     
-    public BufferedImage prepareSourceImg(BufferedImage img){
-        Image tmp = img.getScaledInstance(this.tileWidth, this.tileHeight, Image.SCALE_FAST);
-        BufferedImage resized = new BufferedImage(this.tileWidth, this.tileHeight, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
+    public int getTilesColumns(BufferedImage img){
+        int tiles = img.getWidth()/this.tileWidth;
+        return tiles;
+    }
+    
+    public int getTilesRows(BufferedImage img){
+        int tiles = img.getHeight()/this.tileHeight;
+        return tiles;
+    }
+    
+    public BufferedImage prepareSourceImg(BufferedImage img) throws IOException{
+        
+//        If image is wider than it is tall, first resize height to tile size and then crop out the parts outside of the tile width, leaving the part in the middle
+        
+        if(img.getWidth() > img.getHeight()){
+            BufferedImage resizedHeight = Thumbnails.of(img).size(img.getWidth(), this.tileHeight).asBufferedImage();
+            int cropX = ((resizedHeight.getWidth()-this.tileWidth)/2);
+            BufferedImage prepared = resizedHeight.getSubimage(cropX, 0, this.tileWidth, this.tileHeight);
+            return prepared;
+
+//        If image is taller than it is wide, first resize width to tile size and then crop out the parts outside of the tile height, leaving the part in the middle
+
+        }else{
+            BufferedImage resizedWidth = Thumbnails.of(img).size(this.tileWidth, img.getHeight()).asBufferedImage();
+            int cropY = ((resizedWidth.getHeight()-this.tileHeight)/2);
+            BufferedImage prepared = resizedWidth.getSubimage(0, cropY, this.tileHeight, this.tileWidth);
+            return prepared;
+        }
+        
+        
+        
+        
     }
     
 }

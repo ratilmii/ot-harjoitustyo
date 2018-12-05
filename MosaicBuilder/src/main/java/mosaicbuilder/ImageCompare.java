@@ -26,12 +26,9 @@ public class ImageCompare {
         int ImHeight = goalImage.getHeight();
         int i, j;
         
-        
         for (i=0; i < ImWidth; i++){
             for (j=0; j < ImHeight; j++){
                 
-                int tileRGB = goalImage.getRGB(i, j);
-                int imgRGB = image.getRGB(i, j);
                 int[] tileVector = getVector(goalImage, i, j);
                 int[] sourceVector = getVector(image, i, j);
                 
@@ -45,12 +42,11 @@ public class ImageCompare {
 
     public int[] getVector(BufferedImage image, int i, int j){
         int RGB = image.getRGB(i, j);
-        int[] RGBVector = new int[4];
+        int[] RGBVector = new int[3];
         
-        RGBVector[0] = (RGB >> 24) & 0xff;
-        RGBVector[1] = (RGB >> 16) & 0xff;
-        RGBVector[2] = (RGB >> 8) & 0xff;
-        RGBVector[3] = (RGB) & 0xff;
+        RGBVector[0] = (RGB >> 16) & 0xff;
+        RGBVector[1] = (RGB >> 8) & 0xff;
+        RGBVector[2] = (RGB) & 0xff;
         
         return RGBVector;
     }
@@ -62,7 +58,7 @@ public class ImageCompare {
     
     public double getDist(int[] A, int[] B){
         
-        double dist = Math.sqrt(subSquare(A[0], B[0]) + subSquare(A[1], B[1]) + subSquare(A[2], B[2]) + subSquare(A[3], B[3]));
+        double dist = subSquare(A[0], B[0]) + subSquare(A[1], B[1]) + subSquare(A[2], B[2]);
         return dist;
     }
     

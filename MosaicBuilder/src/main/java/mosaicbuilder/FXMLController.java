@@ -21,11 +21,16 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
+import mosaicbuilder.ImageBuild;
+import mosaicbuilder.ImageColor;
+import mosaicbuilder.ImageCompare;
 
 public class FXMLController implements Initializable {
     
     private File selectedFile;
     private File sourceFiles;
+    private Image goalImage;
+    private BufferedImage goalBuffer;
 
     @FXML
     private Pane anchorPane;
@@ -67,12 +72,12 @@ public class FXMLController implements Initializable {
                 new ExtensionFilter("Image Files", "*.jpg", "*.png", "*.bmp"));
         this.selectedFile = fc.showOpenDialog(null);
         
-        BufferedImage buffer = ImageIO.read(selectedFile);
-        Image goalImage = SwingFXUtils.toFXImage(buffer, null);
+        this.goalBuffer = ImageIO.read(this.selectedFile);
+        this.goalImage = SwingFXUtils.toFXImage(this.goalBuffer, null);
         
-        if(selectedFile != null){
-            goalImagePreview.setImage(goalImage);
-            goalImageTextField.setText(selectedFile.getAbsolutePath());
+        if(this.selectedFile != null){
+            goalImagePreview.setImage(this.goalImage);
+            goalImageTextField.setText(this.selectedFile.getAbsolutePath());
         }
         
         int k;
@@ -80,34 +85,16 @@ public class FXMLController implements Initializable {
         
         ImageColor ic = new ImageColor();
         
-        int i = ic.getDominantColor(buffer);
+        int i = ic.getDominantColor(this.goalBuffer);
         int[] ar = ic.getPixelARGBArray(i);
 
-//        int[] arr = new int[4];
-//        arr[0] = (i >> 24) & 0xff;
-//        arr[1] = (i >> 16) & 0xff;
-//        arr[2] = (i >> 8) & 0xff;
-//        arr[3] = (i) & 0xff;
-        
-//        int[] j = ic.getPixelARGBArray(buffer.getRGB(8, 0));
-//        int[] l = ic.getRoundedPixelARGBArray(j);
         System.out.println(i+"\n");
         for(k=0;k<ar.length;k++){
             System.out.println(ar[k]);
         }
         System.out.println("");
-//        for(y=0;y<l.length;y++){
-//            System.out.println(l[y]);
-//        }
+
         RGBField.setText("(" + ar[1] + ", " + ar[2] + ", " + ar[3] + ")");
-        
-        ImageCompare cc = new ImageCompare();
-        
-        BufferedImage compareTestImage1 = ImageIO.read(new File("src/compareTest1.png"));
-        BufferedImage compareTestImage2 = ImageIO.read(new File("src/compareTest2.png"));
-        
-        cc.compareTile(compareTestImage1, compareTestImage2);
-        System.out.println("" + cc.getDistanceSum());
         
     }
     
@@ -118,31 +105,61 @@ public class FXMLController implements Initializable {
     @FXML
     public void createButtonAction(ActionEvent event) throws IOException{
         ImageBuild ib = new ImageBuild(50, 50);
-        ImageCompare ic = new ImageCompare();
+
         File[] sourceImages = this.sourceFiles.listFiles();
-        BufferedImage goalImage = ImageIO.read(this.selectedFile);
-        int i;
-        int bestMatchID = 0;
-        double lowestSum = 0;
+        
+        int i, k, l;
+        
+        double lowestSum = Double.POSITIVE_INFINITY;
         int x = 0;
         int y = 0;
         
+        int tilesColumns = ib.getTilesColumns(this.goalBuffer);
+        int tilesRows = ib.getTilesRows(this.goalBuffer);
+        int tileAmount = tilesRows*tilesColumns;
+        int[][] IDArray = new int[tileAmount][1];
         
-        for(i=0;i<sourceImages.length;i++){
-            BufferedImage tile = ib.getTile(goalImage, x, y);
-            BufferedImage image = ImageIO.read(sourceImages[i]);
-            BufferedImage resized = ib.prepareSourceImg(image);
-            ic.compareTile(tile, resized);
-            
-            double distSum = ic.getDistanceSum();
-            if (distSum < lowestSum){
-                lowestSum = distSum;
-                bestMatchID = i;
-            }
+        System.out.println(tilesColumns + ", " + tilesRows + ", " + sourceImages.length);
+        
+        for (k=0;k<tilesRows;k++){
+            for(l=0;l<tilesColumns;l++){
+                int currentTile = 0;    
+                ImageCompare ic = new ImageCompare();
+                BufferedImage tile = ib.getTile(this.goalBuffer, x, y);
+
+                for(i=0;i < sourceImages.length;i++){
+                    int bestMatchID = 0;
+                    BufferedImage image = ImageIO.read(sourceImages[i]);
+                    try{
+                        BufferedImage resized = ib.prepareSourceImg(image);
+                        ic.compareTile(tile, resized);
+                    }catch(NullPointerException e){
+                        continue;
+                    }
+
+                    double distSum = ic.getDistanceSum();
+                    if (distSum < lowestSum){
+                        lowestSum = distSum;
+                        bestMatchID = i;
+                        IDArray[currentTile][0] = bestMatchID;
+                        System.out.println(IDArray[currentTile][currentTile]);
+                    }
+                    
+                }
+                
+                if(x < (this.goalBuffer.getWidth()-(ib.getTileWidth()*2)) && y < (this.goalBuffer.getHeight()-(ib.getTileHeight()*2))){
+                    x += ib.getTileWidth();
+                }else if (x >= (this.goalBuffer.getWidth()-ib.getTileWidth()) && y < (this.goalBuffer.getHeight()-(ib.getTileHeight()*2))){
+                    x = 0;
+                    y += ib.getTileHeight();
+                }else{ 
+                    System.out.println("Done!");
+                    
+                }
+                currentTile += 1;
+                
+            }    
         }
-        
-        System.out.println(bestMatchID);
-        
     }
     
     @FXML 
