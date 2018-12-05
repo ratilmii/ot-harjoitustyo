@@ -105,11 +105,13 @@ public class FXMLController implements Initializable {
     @FXML
     public void createButtonAction(ActionEvent event) throws IOException{
         ImageBuild ib = new ImageBuild(50, 50);
+        if(this.sourceFiles == null){
+            throw new IOException("No provided images");
+        }
 
         File[] sourceImages = this.sourceFiles.listFiles();
         
         int i, k, l;
-        int currentTile = 0;
         
         double lowestSum = Double.POSITIVE_INFINITY;
         int x = 0;
@@ -117,45 +119,48 @@ public class FXMLController implements Initializable {
         
         int tilesColumns = ib.getTilesColumns(this.goalBuffer);
         int tilesRows = ib.getTilesRows(this.goalBuffer);
+        
         int tileAmount = tilesRows*tilesColumns;
-        int[][] IDArray = new int[tileAmount][1];
+        int[] IDArray = new int[tileAmount];
         
         System.out.println(tilesColumns + ", " + tilesRows + ", " + sourceImages.length);
+        int currentTile = 0;
+        int bestMatchID;
         
-        for (k=0;k<tilesRows;k++){
-            for(l=0;l<tilesColumns;l++){
+        loop: for (k = 0; k < tilesRows; k++){
+            for (l = 0; l < tilesColumns; l++){
                     
                 ImageCompare ic = new ImageCompare();
                 BufferedImage tile = ib.getTile(this.goalBuffer, x, y);
 
-                for(i=0;i < sourceImages.length;i++){
-                    int bestMatchID = 0;
+                for(i = 0; i < sourceImages.length; i++){
+                    
                     BufferedImage image = ImageIO.read(sourceImages[i]);
-                    try{
+                    try {
                         BufferedImage resized = ib.prepareSourceImg(image);
                         ic.compareTile(tile, resized);
-                    }catch(NullPointerException e){
+                    } catch (NullPointerException e) {
                         continue;
                     }
 
                     double distSum = ic.getDistanceSum();
-                    if (distSum < lowestSum){
+                    if (distSum < lowestSum) {
                         lowestSum = distSum;
                         bestMatchID = i;
-                        IDArray[currentTile][0] = bestMatchID;
-                        System.out.println(IDArray[currentTile][0]);
+                        IDArray[currentTile] = bestMatchID;
+                        System.out.println(IDArray[currentTile]);
                     }
                     
                 }
                 
-                if(x < (this.goalBuffer.getWidth()-(ib.getTileWidth()*2)) && y < (this.goalBuffer.getHeight()-(ib.getTileHeight()*2))){
+                if (x < (this.goalBuffer.getWidth() - (ib.getTileWidth() * 2)) && y < (this.goalBuffer.getHeight() - (ib.getTileHeight() * 2))){
                     x += ib.getTileWidth();
-                }else if (x >= (this.goalBuffer.getWidth()-ib.getTileWidth()) && y < (this.goalBuffer.getHeight()-(ib.getTileHeight()*2))){
+                } else if (x >= (this.goalBuffer.getWidth() - ib.getTileWidth()) && y < (this.goalBuffer.getHeight() - (ib.getTileHeight() * 2))){
                     x = 0;
                     y += ib.getTileHeight();
-                }else{ 
+                } else { 
                     System.out.println("Done!");
-                    
+                    break loop;
                 }
                 currentTile += 1;
                 
