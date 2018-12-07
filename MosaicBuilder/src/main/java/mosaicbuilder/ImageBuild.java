@@ -9,7 +9,9 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
 import net.coobird.thumbnailator.Thumbnails;
 
 /**
@@ -67,6 +69,30 @@ public class ImageBuild {
             return prepared;
         }
 
+    }
+    
+    public BufferedImage buildMosaic(File[] source, int[] feed, int tileColumns, int tileRows) throws IOException {
+        
+        int i, j;
+        int current = 0;
+        
+        BufferedImage image = new BufferedImage(tileColumns * this.tileWidth, tileRows * this.tileHeight, BufferedImage.TYPE_INT_ARGB);
+        
+        
+        for (j = 0; j < tileRows; j++) {
+            for (i = 0; i < tileColumns; i++) {
+                int bestID = feed[current];
+                
+                BufferedImage sub = image.getSubimage(i * this.tileWidth, j * this.tileHeight, this.tileWidth, this.tileHeight);
+                BufferedImage block = ImageIO.read(source[bestID]);
+                BufferedImage prepared = prepareSourceImg(block);
+                BufferedImage converted = new BufferedImage(prepared.getWidth(), prepared.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                converted.getGraphics().drawImage(prepared, 0, 0, null);
+                sub.setData(converted.getData());
+                current += 1;
+            }
+        }
+        return image;
     }
 
 }

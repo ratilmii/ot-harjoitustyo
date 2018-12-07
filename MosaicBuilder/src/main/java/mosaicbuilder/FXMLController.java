@@ -29,6 +29,7 @@ public class FXMLController implements Initializable {
 
     private File selectedFile;
     private File sourceFiles;
+    private File[] sourceFolder;
     private Image goalImage;
     private BufferedImage goalBuffer;
 
@@ -109,7 +110,7 @@ public class FXMLController implements Initializable {
             throw new IOException("No provided images");
         }
 
-        File[] sourceImages = this.sourceFiles.listFiles();
+        this.sourceFolder = this.sourceFiles.listFiles();
 
         int i, k, l;
 
@@ -123,37 +124,39 @@ public class FXMLController implements Initializable {
         int tileAmount = tilesRows * tilesColumns;
         int[] idArray = new int[tileAmount];
 
-        System.out.println(tilesColumns + ", " + tilesRows + ", " + sourceImages.length);
+        System.out.println(tilesColumns + ", " + tilesRows + ", " + this.sourceFolder.length);
         int currentTile = 0;
         int bestMatchID;
         double distSum;
 
         loop:
         for (k = 0; k < tilesRows; k++) {
-            lowestSum = Double.POSITIVE_INFINITY;
             for (l = 0; l < tilesColumns; l++) {
-
-                ImageCompare ic = new ImageCompare();
+                lowestSum = Double.POSITIVE_INFINITY;
+                
                 BufferedImage tile = ib.getTile(this.goalBuffer, x, y);
 
-                for (i = 0; i < sourceImages.length; i++) {
-
-                    BufferedImage image = ImageIO.read(sourceImages[i]);
+                for (i = 0; i < this.sourceFolder.length; i++) {
+                    ImageCompare ic = new ImageCompare();    
+                    BufferedImage image = ImageIO.read(this.sourceFolder[i]);
+                    BufferedImage resized = null;
                     try {
-                        BufferedImage resized = ib.prepareSourceImg(image);
+                        resized = ib.prepareSourceImg(image);
                         ic.compareTile(tile, resized);
                     } catch (NullPointerException e) {
+                        System.out.println("NullPointerException:" + e);
                         continue;
                     }
 
                     distSum = ic.getDistanceSum();
+//                    System.out.println(distSum);
                     if (distSum < lowestSum) {
                         lowestSum = distSum;
                         bestMatchID = i;
                         idArray[currentTile] = bestMatchID;
-                        System.out.println(idArray[currentTile]);
+//                        System.out.println(idArray[currentTile] + "\n");
                     }
-
+                    System.out.println(idArray[currentTile] + "\n");
                 }
 
                 if (x < (this.goalBuffer.getWidth() - (ib.getTileWidth() * 2)) && y < (this.goalBuffer.getHeight() - (ib.getTileHeight() * 2))) {
@@ -163,6 +166,10 @@ public class FXMLController implements Initializable {
                     y += ib.getTileHeight();
                 } else {
                     System.out.println("Done!");
+                    BufferedImage resultBuffer = ib.buildMosaic(this.sourceFolder, idArray, tilesColumns, tilesRows);
+                    Image result = SwingFXUtils.toFXImage(resultBuffer, null);
+
+                    mainImageView.setImage(result);
                     break loop;
                 }
                 currentTile += 1;
