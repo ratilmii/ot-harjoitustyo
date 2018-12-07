@@ -8,66 +8,65 @@ package mosaicbuilder;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-
 /**
  *
  * @author Miika
  */
 public class ImageCompare {
-    
+
     private double distanceSum;
-    
-    public ImageCompare(){
+
+    public ImageCompare() {
         this.distanceSum = 0;
     }
-    
-    public void compareTile(BufferedImage goalImage, BufferedImage image){
-        int ImWidth = goalImage.getWidth();
-        int ImHeight = goalImage.getHeight();
+
+    public void compareTile(BufferedImage goalImage, BufferedImage image) {
+        int imWidth = goalImage.getWidth();
+        int imHeight = goalImage.getHeight();
         int i, j;
-        
-        for (i=0; i < ImWidth; i++){
-            for (j=0; j < ImHeight; j++){
-                
+
+        for (i = 0; i < imWidth; i++) {
+            for (j = 0; j < imHeight; j++) {
+
                 int[] tileVector = getVector(goalImage, i, j);
                 int[] sourceVector = getVector(image, i, j);
-                
+
                 double dist = getDist(sourceVector, tileVector);
                 sumDist(dist);
 
             }
         }
-        
+
     }
 
-    public int[] getVector(BufferedImage image, int i, int j){
-        int RGB = image.getRGB(i, j);
-        int[] RGBVector = new int[3];
-        
-        RGBVector[0] = (RGB >> 16) & 0xff;
-        RGBVector[1] = (RGB >> 8) & 0xff;
-        RGBVector[2] = (RGB) & 0xff;
-        
-        return RGBVector;
+    public int[] getVector(BufferedImage image, int i, int j) {
+        int rgb = image.getRGB(i, j);
+        int[] rgbVector = new int[3];
+
+        rgbVector[0] = (rgb >> 16) & 0xff;
+        rgbVector[1] = (rgb >> 8) & 0xff;
+        rgbVector[2] = (rgb) & 0xff;
+
+        return rgbVector;
     }
-    
-    public double subSquare(int A, int B){
-        double result = (B - A) * (B - A);
+
+    public double subSquare(int a, int b) {
+        double result = (b - a) * (b - a);
         return result;
     }
-    
-    public double getDist(int[] A, int[] B){
-        
-        double dist = subSquare(A[0], B[0]) + subSquare(A[1], B[1]) + subSquare(A[2], B[2]);
+
+    public double getDist(int[] a, int[] b) {
+
+        double dist = subSquare(a[0], b[0]) + subSquare(a[1], b[1]) + subSquare(a[2], b[2]);
         return dist;
     }
-    
-    public void sumDist(double dist){
+
+    public void sumDist(double dist) {
         this.distanceSum += dist;
     }
-    
-    public double getDistanceSum(){
+
+    public double getDistanceSum() {
         return this.distanceSum;
     }
-    
+
 }
