@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -32,10 +33,17 @@ public class FXMLController implements Initializable {
     private File[] sourceFolder;
     private Image goalImage;
     private BufferedImage goalBuffer;
+    private BufferedImage exportBuffer;
 
     @FXML
     private Pane anchorPane;
 
+    @FXML
+    private CheckBox checkBoxColor;
+    
+    @FXML
+    private CheckBox checkBoxPixel;
+    
     @FXML
     private Button openImageButton;
 
@@ -47,6 +55,9 @@ public class FXMLController implements Initializable {
 
     @FXML
     private Button createButton;
+    
+    @FXML
+    private Label messageField;
 
     @FXML
     private Button sourceImageClearButton;
@@ -105,7 +116,8 @@ public class FXMLController implements Initializable {
 
     @FXML
     public void createButtonAction(ActionEvent event) throws IOException {
-        ImageBuild ib = new ImageBuild(50, 50);
+        messageField.setText("");
+        ImageBuild ib = new ImageBuild(20, 20);
         if (this.sourceFiles == null) {
             throw new IOException("No provided images");
         }
@@ -121,63 +133,90 @@ public class FXMLController implements Initializable {
         int tilesColumns = ib.getTilesColumns(this.goalBuffer);
         int tilesRows = ib.getTilesRows(this.goalBuffer);
 
-        int tileAmount = tilesRows * tilesColumns;
-        int[] idArray = new int[tileAmount];
+        int[][] idArray = new int[tilesRows][tilesColumns];
 
         System.out.println(tilesColumns + ", " + tilesRows + ", " + this.sourceFolder.length);
-        int currentTile = 0;
         int bestMatchID;
         double distSum;
 
+        double progress = 0;
+        
         loop:
         for (k = 0; k < tilesRows; k++) {
             for (l = 0; l < tilesColumns; l++) {
                 lowestSum = Double.POSITIVE_INFINITY;
-                
                 BufferedImage tile = ib.getTile(this.goalBuffer, x, y);
-
+                
                 for (i = 0; i < this.sourceFolder.length; i++) {
-                    ImageCompare ic = new ImageCompare();    
+                    ImageCompare ic = new ImageCompare();
                     BufferedImage image = ImageIO.read(this.sourceFolder[i]);
                     BufferedImage resized = null;
-                    try {
-                        resized = ib.prepareSourceImg(image);
-                        ic.compareTile(tile, resized);
-                    } catch (NullPointerException e) {
-                        System.out.println("NullPointerException:" + e);
-                        continue;
-                    }
+                    
+                    if (checkBoxColor.isSelected()) {
+                        try {
+                            resized = ib.prepareSourceImg(image);
+                            ic.compareTileColor(tile, resized);
+                        } catch (NullPointerException e) {
+                            System.out.println("NullPointerException: " + e);
+                            continue;
+                        }
 
-                    distSum = ic.getDistanceSum();
-//                    System.out.println(distSum);
-                    if (distSum < lowestSum) {
-                        lowestSum = distSum;
-                        bestMatchID = i;
-                        idArray[currentTile] = bestMatchID;
-//                        System.out.println(idArray[currentTile] + "\n");
+                        distSum = ic.getDistanceSum();
+                        if (distSum < lowestSum) {
+                            lowestSum = distSum;
+                            bestMatchID = i;
+                            idArray[k][l] = bestMatchID;
+                        }    
+                    } else if (checkBoxPixel.isSelected()) {
+                        try {
+                            resized = ib.prepareSourceImg(image);
+                            ic.compareTilePixels(tile, resized);
+                        } catch (NullPointerException e) {
+                            System.out.println("NullPointerException:" + e);
+                            continue;
+                        }
+
+                        distSum = ic.getDistanceSum();
+    //                    System.out.println(distSum);
+                        if (distSum < lowestSum) {
+                            lowestSum = distSum;
+                            bestMatchID = i;
+                            idArray[k][l] = bestMatchID;
+    //                        System.out.println(idArray[currentTile] + "\n");
+                        }
+                    } else {
+                        messageField.setText("Select one!");
+                        return;
                     }
-                    System.out.println(idArray[currentTile] + "\n");
+                    
                 }
-
-                if (x < (this.goalBuffer.getWidth() - (ib.getTileWidth() * 2)) && y < (this.goalBuffer.getHeight() - (ib.getTileHeight() * 2))) {
-                    x += ib.getTileWidth();
-                } else if (x >= (this.goalBuffer.getWidth() - ib.getTileWidth()) && y < (this.goalBuffer.getHeight() - (ib.getTileHeight() * 2))) {
+                x += ib.getTileWidth();
+                if ( x > this.goalBuffer.getWidth() - ib.getTileWidth()) {
                     x = 0;
                     y += ib.getTileHeight();
-                } else {
-                    System.out.println("Done!");
-                    BufferedImage resultBuffer = ib.buildMosaic(this.sourceFolder, idArray, tilesColumns, tilesRows);
-                    Image result = SwingFXUtils.toFXImage(resultBuffer, null);
-
-                    mainImageView.setImage(result);
-                    break loop;
+                    if ( y > this.goalBuffer.getHeight() - ib.getTileHeight()) {
+                        System.out.println("Done!");
+                        break loop;
+                    }
                 }
-                currentTile += 1;
-
+                System.out.println(progress + "%");
+                progress += (1.0 / (tilesRows * tilesColumns)) * 100.0;
             }
         }
+        
+        BufferedImage resultBuffer = ib.buildMosaic(this.sourceFolder, idArray, tilesColumns, tilesRows);
+        Image result = SwingFXUtils.toFXImage(resultBuffer, null);
+        this.exportBuffer = resultBuffer;
+        mainImageView.setImage(result);
     }
 
+    @FXML
+    public void exportButtonAction(ActionEvent event) throws IOException {
+        File outputFile = new File("mosaic.png");
+        ImageIO.write(this.exportBuffer, "png", outputFile);
+        messageField.setText("Mosaic exported successfully!");
+    }
+    
     @FXML
     public void sourceButtonAction(ActionEvent event) {
         DirectoryChooser dc = new DirectoryChooser();
@@ -205,6 +244,16 @@ public class FXMLController implements Initializable {
         // TODO
     }
 
+    @FXML 
+    public void clickColor(ActionEvent event) {
+        checkBoxPixel.setSelected(false);
+    }
+    
+    @FXML 
+    public void clickPixel(ActionEvent event) {
+        checkBoxColor.setSelected(false);
+    }
+    
     @FXML
     public void closeWindow() {
         Platform.exit();

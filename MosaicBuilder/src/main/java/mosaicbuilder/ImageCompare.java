@@ -20,7 +20,7 @@ public class ImageCompare {
         this.distanceSum = 0;
     }
 
-    public void compareTile(BufferedImage goalImage, BufferedImage image) {
+    public void compareTilePixels(BufferedImage goalImage, BufferedImage image) {
         int imWidth = goalImage.getWidth();
         int imHeight = goalImage.getHeight();
         int i, j;
@@ -33,7 +33,6 @@ public class ImageCompare {
 
                 double dist = getDist(sourceVector, tileVector);
                 sumDist(dist);
-
             }
         }
 
@@ -41,6 +40,27 @@ public class ImageCompare {
 
     public int[] getVector(BufferedImage image, int i, int j) {
         int rgb = image.getRGB(i, j);
+        int[] rgbVector = new int[3];
+
+        rgbVector[0] = (rgb >> 16) & 0xff;
+        rgbVector[1] = (rgb >> 8) & 0xff;
+        rgbVector[2] = (rgb) & 0xff;
+
+        return rgbVector;
+    }
+
+    public void compareTileColor(BufferedImage goalImage, BufferedImage image) {
+
+        int[] tileVector = getVector(goalImage);
+        int[] sourceVector = getVector(image);
+
+        double dist = getDist(sourceVector, tileVector);
+        sumDist(dist);
+    }
+
+    public int[] getVector(BufferedImage image) {
+        ImageColor ic = new ImageColor();
+        int rgb = ic.getDominantColor(image);
         int[] rgbVector = new int[3];
 
         rgbVector[0] = (rgb >> 16) & 0xff;

@@ -70,29 +70,41 @@ public class ImageBuild {
         }
 
     }
-    
-    public BufferedImage buildMosaic(File[] source, int[] feed, int tileColumns, int tileRows) throws IOException {
-        
+
+    public BufferedImage buildMosaic(File[] source, int[][] feed, int tileColumns, int tileRows) throws IOException {
+
         int i, j;
-        int current = 0;
-        
+
         BufferedImage image = new BufferedImage(tileColumns * this.tileWidth, tileRows * this.tileHeight, BufferedImage.TYPE_INT_ARGB);
-        
-        
+
         for (j = 0; j < tileRows; j++) {
             for (i = 0; i < tileColumns; i++) {
-                int bestID = feed[current];
-                
+                int bestID = feed[j][i];
+
                 BufferedImage sub = image.getSubimage(i * this.tileWidth, j * this.tileHeight, this.tileWidth, this.tileHeight);
                 BufferedImage block = ImageIO.read(source[bestID]);
                 BufferedImage prepared = prepareSourceImg(block);
                 BufferedImage converted = new BufferedImage(prepared.getWidth(), prepared.getHeight(), BufferedImage.TYPE_INT_ARGB);
                 converted.getGraphics().drawImage(prepared, 0, 0, null);
                 sub.setData(converted.getData());
-                current += 1;
             }
         }
         return image;
     }
+
+//    public BufferedImage buildFromColors(File[] source, int[][] feed, int tileColumns, int tileRows) throws IOException {
+//
+//        ImageColor ic = new ImageColor();
+//        int i, j;
+//
+//        BufferedImage image = new BufferedImage(tileColumns * this.tileWidth, tileRows * this.tileHeight, BufferedImage.TYPE_INT_ARGB);
+//
+//        for (j = 0; j < tileRows; j++) {
+//            for (i = 0; i < tileColumns; i++) {
+//                
+//            }
+//        }
+//
+//    }
 
 }

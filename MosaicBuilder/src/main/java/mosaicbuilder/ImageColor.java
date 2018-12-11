@@ -53,7 +53,6 @@ public class ImageColor {
         }
 
         dominantColor = getBiggestValueKey(hm);
-
         return dominantColor;
     }
 
