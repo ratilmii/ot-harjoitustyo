@@ -4,19 +4,9 @@
  * and open the template in the editor.
  */
 package mosaicbuilder;
-
-import java.io.File;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import javafx.embed.swing.SwingFXUtils;
-import javax.imageio.ImageIO;
 
 /**
  *

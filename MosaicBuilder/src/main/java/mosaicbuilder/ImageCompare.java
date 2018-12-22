@@ -6,7 +6,6 @@
 package mosaicbuilder;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 /**
  *
@@ -47,15 +46,6 @@ public class ImageCompare {
         rgbVector[2] = (rgb) & 0xff;
 
         return rgbVector;
-    }
-
-    public void compareTileColor(BufferedImage goalImage, BufferedImage image) {
-
-        int[] tileVector = getVector(goalImage);
-        int[] sourceVector = getVector(image);
-
-        double dist = getDist(sourceVector, tileVector);
-        sumDist(dist);
     }
 
     public int[] getVector(BufferedImage image) {

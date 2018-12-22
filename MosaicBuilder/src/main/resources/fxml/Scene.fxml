@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -25,14 +24,9 @@
                     <MenuItem mnemonicParsing="false" onAction="#closeWindow" text="Close" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="placeholder" />
-                  </items>
-                </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" onAction="#openInstructions" text="Instructions" />
                   </items>
                 </Menu>
               </menus>
@@ -41,7 +35,7 @@
          <left>
             <VBox alignment="TOP_CENTER" prefHeight="575.0" prefWidth="285.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label minHeight="30.0" prefHeight="30.0" prefWidth="225.0" text="Goal Image" />
+                  <Label minHeight="30.0" prefHeight="30.0" prefWidth="225.0" text="Goal image" />
                   <HBox prefWidth="285.0">
                      <children>
                         <TextField fx:id="goalImageTextField" editable="false" prefHeight="30.0" prefWidth="170.0">
@@ -58,17 +52,7 @@
                      </VBox.margin>
                   </ImageView>
                   <Button fx:id="goalImageClearButton" mnemonicParsing="false" onAction="#clearGoalImagePreview" prefHeight="30.0" prefWidth="50.0" text="Clear" />
-                  <Label prefHeight="30.0" prefWidth="225.0" text="Current Image's Dominant RGB">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="rgbField" editable="false" prefHeight="30.0" prefWidth="225.0">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label minHeight="30.0" prefHeight="30.0" prefWidth="225.0" text="Source Image Directory">
+                  <Label minHeight="30.0" prefHeight="30.0" prefWidth="225.0" text="Source image directory">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -84,38 +68,36 @@
                      </children>
                   </HBox>
                   <Button fx:id="sourceImageClearButton" mnemonicParsing="false" onAction="#clearSourceImagePath" prefHeight="30.0" prefWidth="50.0" text="Clear" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="CENTER" text="Tile side length in px" />
+                        <TextField fx:id="tileSizeBox" prefHeight="30.0" prefWidth="42.0" text="30">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
                </children>
                <padding>
                   <Insets left="30.0" right="30.0" top="15.0" />
                </padding>
             </VBox>
          </left>
-         <right>
+         <center>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="mainImageView" fitHeight="403.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="messageField">
-                     <VBox.margin>
-                        <Insets bottom="15.0" top="15.0" />
-                     </VBox.margin>
-                  </Label>
+                  <ImageView fx:id="mainImageView" fitHeight="450.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" />
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonAction" text="Create From">
+                        <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonAction" text="Create Mosaic">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
                         </Button>
-                        <CheckBox fx:id="checkBoxColor" mnemonicParsing="false" onAction="#clickColor" selected="true" text="Dominant Color">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
-                        </CheckBox>
-                        <CheckBox fx:id="checkBoxPixel" mnemonicParsing="false" onAction="#clickPixel" text="Pixel Vector Distance">
-                           <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </HBox.margin>
-                        </CheckBox>
                      </children>
                      <VBox.margin>
                         <Insets bottom="15.0" top="15.0" />
@@ -123,12 +105,15 @@
                   </HBox>
                   <Button fx:id="exportButton" alignment="CENTER" mnemonicParsing="false" onAction="#exportButtonAction" text="Export Finished">
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="30.0" />
                      </VBox.margin>
                   </Button>
                </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </VBox>
-         </right>
+         </center>
       </BorderPane>
     </children>
 </AnchorPane>

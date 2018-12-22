@@ -1,10 +1,11 @@
 package mosaicbuilder;
 
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -12,8 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,9 +23,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.imageio.ImageIO;
-import mosaicbuilder.ImageBuild;
-import mosaicbuilder.ImageColor;
-import mosaicbuilder.ImageCompare;
 
 public class FXMLController implements Initializable {
 
@@ -36,40 +34,16 @@ public class FXMLController implements Initializable {
     private BufferedImage exportBuffer;
 
     @FXML
-    private Pane anchorPane;
+    private TextField tileSizeBox;
 
-    @FXML
-    private CheckBox checkBoxColor;
-    
-    @FXML
-    private CheckBox checkBoxPixel;
-    
-    @FXML
-    private Button openImageButton;
-
-    @FXML
-    private Button openDirectoryButton;
-
-    @FXML
-    private Button goalImageClearButton;
-
-    @FXML
-    private Button createButton;
-    
     @FXML
     private Label messageField;
-
-    @FXML
-    private Button sourceImageClearButton;
 
     @FXML
     private ImageView goalImagePreview;
 
     @FXML
     private ImageView mainImageView;
-
-    @FXML
-    private TextField rgbField;
 
     @FXML
     private TextField goalImageTextField;
@@ -106,8 +80,6 @@ public class FXMLController implements Initializable {
         }
         System.out.println("");
 
-        rgbField.setText("(" + ar[1] + ", " + ar[2] + ", " + ar[3] + ")");
-
     }
 
     public ImageView getGoalImagePreview() {
@@ -116,8 +88,8 @@ public class FXMLController implements Initializable {
 
     @FXML
     public void createButtonAction(ActionEvent event) throws IOException {
-        messageField.setText("");
-        ImageBuild ib = new ImageBuild(20, 20);
+        int tileSide = Integer.parseInt(this.tileSizeBox.getText());
+        ImageBuild ib = new ImageBuild(tileSide, tileSide);
         if (this.sourceFiles == null) {
             throw new IOException("No provided images");
         }
@@ -152,41 +124,19 @@ public class FXMLController implements Initializable {
                     BufferedImage image = ImageIO.read(this.sourceFolder[i]);
                     BufferedImage resized = null;
                     
-                    if (checkBoxColor.isSelected()) {
-                        try {
-                            resized = ib.prepareSourceImg(image);
-                            ic.compareTileColor(tile, resized);
-                        } catch (NullPointerException e) {
-                            System.out.println("NullPointerException: " + e);
-                            continue;
-                        }
+                    try {
+                        resized = ib.prepareSourceImg(image);
+                        ic.compareTilePixels(tile, resized);
+                    } catch (NullPointerException e) {
+                        System.out.println("NullPointerException:" + e);
+                        continue;
+                    }
 
-                        distSum = ic.getDistanceSum();
-                        if (distSum < lowestSum) {
-                            lowestSum = distSum;
-                            bestMatchID = i;
-                            idArray[k][l] = bestMatchID;
-                        }    
-                    } else if (checkBoxPixel.isSelected()) {
-                        try {
-                            resized = ib.prepareSourceImg(image);
-                            ic.compareTilePixels(tile, resized);
-                        } catch (NullPointerException e) {
-                            System.out.println("NullPointerException:" + e);
-                            continue;
-                        }
-
-                        distSum = ic.getDistanceSum();
-    //                    System.out.println(distSum);
-                        if (distSum < lowestSum) {
-                            lowestSum = distSum;
-                            bestMatchID = i;
-                            idArray[k][l] = bestMatchID;
-    //                        System.out.println(idArray[currentTile] + "\n");
-                        }
-                    } else {
-                        messageField.setText("Select one!");
-                        return;
+                    distSum = ic.getDistanceSum();
+                    if (distSum < lowestSum) {
+                        lowestSum = distSum;
+                        bestMatchID = i;
+                        idArray[k][l] = bestMatchID;
                     }
                     
                 }
@@ -231,7 +181,6 @@ public class FXMLController implements Initializable {
     public void clearGoalImagePreview(ActionEvent event) {
         goalImagePreview.setImage(null);
         goalImageTextField.setText(null);
-        rgbField.setText(null);
     }
 
     @FXML
@@ -244,18 +193,15 @@ public class FXMLController implements Initializable {
         // TODO
     }
 
-    @FXML 
-    public void clickColor(ActionEvent event) {
-        checkBoxPixel.setSelected(false);
-    }
-    
-    @FXML 
-    public void clickPixel(ActionEvent event) {
-        checkBoxColor.setSelected(false);
-    }
-    
     @FXML
     public void closeWindow() {
         Platform.exit();
+    }
+    
+    @FXML 
+    public void openInstructions() throws Exception {
+        String url = "https://github.com/ratilmii/ot-harjoitustyo/blob/master/Dokumentaatio/Kayttoohjeet.md";
+        Desktop desktop = Desktop.getDesktop();
+        desktop.browse(URI.create(url));
     }
 }
