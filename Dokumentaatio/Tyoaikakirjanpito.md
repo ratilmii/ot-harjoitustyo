@@ -10,4 +10,5 @@
 | 4.-5.12.| 15   | Ohjelmalogiikan täysi uudistaminen ja siirtyminen dominanteista väreistä vektorien erotuksiin |
 | 7.12.  | 4    | Toiminnallisuuden hiomista ja prosessointiin kuluvan ajan optimointia |
 | 11.12. | 5    | Lisätty mahdollisuus valita joko dominanttiin väriin tai vektorien erotuksiin perustuva metodi, ei tuota vielä toivottua ajan säästöä |
-| Yht. | 44 |
+| 22.12. | 6    | Loppupalautus ja siistiminen |
+| Yht. | 60 |
